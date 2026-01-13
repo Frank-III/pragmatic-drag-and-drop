@@ -1,0 +1,88 @@
+---
+order: 0
+title: Svelte adapter
+description: Optional package with Svelte actions for Pragmatic drag and drop adapters.
+---
+
+import SectionMessage from '@atlaskit/section-message';
+
+This package provides Svelte actions that wrap the core adapters so you can write
+`use:draggable` and `use:dropTargetForElements` bindings with the same options you already use in
+plain JavaScript.
+
+<SectionMessage>
+
+This package depends on:
+
+- [the core package](/components/pragmatic-drag-and-drop/core-package)
+- [`svelte`](https://svelte.dev/) for action usage (Svelte 4 and Svelte 5)
+
+</SectionMessage>
+
+## Element adapter actions
+
+```svelte
+<script lang="ts">
+	import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop-svelte-adapter/element/adapter';
+
+	const item = { id: 'A1' };
+</script>
+
+<div
+	use:draggable={{
+		getInitialData: () => ({ id: item.id }),
+		onDragStart: ({ source }) => {
+			console.log('drag started', source.data.id);
+		},
+	}}
+>
+	Drag me
+</div>
+
+<div
+	use:dropTargetForElements={{
+		getData: () => ({ id: item.id }),
+		onDrop: ({ source }) => {
+			console.log('dropped', source.data.id);
+		},
+	}}
+>
+	Drop here
+</div>
+```
+
+## External adapter actions
+
+```svelte
+<script lang="ts">
+	import { dropTargetForExternal } from '@atlaskit/pragmatic-drag-and-drop-svelte-adapter/external/adapter';
+</script>
+
+<div
+	use:dropTargetForExternal={{
+		onDrop: ({ source }) => {
+			console.log('external drop', source);
+		},
+	}}
+>
+	Drop files or URLs here
+</div>
+```
+
+## Text selection adapter actions
+
+```svelte
+<script lang="ts">
+	import { dropTargetForTextSelection } from '@atlaskit/pragmatic-drag-and-drop-svelte-adapter/text-selection/adapter';
+</script>
+
+<div
+	use:dropTargetForTextSelection={{
+		onDrop: ({ source }) => {
+			console.log('text selection', source);
+		},
+	}}
+>
+	Drop selected text here
+</div>
+```
